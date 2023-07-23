@@ -46,13 +46,13 @@ void QuickSort(int A[], int l, int h)
 int main()
 {
     clock_t start, end;
-    start = clock();
     int n;
     printf("Enter the array size\n");
     scanf("%d", &n);
     printf("Enter the Elements\n");
     for (int i = 0; i < n; i++)
         scanf("%d",&A[i]);
+    start = clock();
     QuickSort(A, 0,n-1);
     for (int i = 0; i < n; i++)
         printf("%d ", A[i]);
