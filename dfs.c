@@ -1,3 +1,4 @@
+#include<stdio.h>
 int graph[20][20];
 void DFS(int i,int vis[],int n)
 {
@@ -35,6 +36,8 @@ void main()
 }
 
 /*
+Number of vertices : 6
+Adj Matrix:-
 0 1 1 0 0 0
 0 0 0 1 1 0
 0 0 0 0 0 1
