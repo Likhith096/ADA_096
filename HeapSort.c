@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <time.h>
 void swap(int *a, int *b)
 {
     int temp = *a;
@@ -47,9 +47,15 @@ void heapSort(int a[], int n)
 
 int main()
 {
-    int a[] = {15, 5, 20, 1, 7, 10, 30};
-    int n = sizeof(a) / sizeof(a[0]);
-
+    clock_t start, end;
+    int a[10001];
+    printf("Enter the size of array\n");
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &a[i]);
+    }
     printf("Original array: ");
     for (int i = 0; i < n; i++)
     {
@@ -57,6 +63,7 @@ int main()
     }
     printf("\n");
 
+    start = clock();
     heapSort(a, n);
 
     printf("Sorted array: ");
@@ -65,6 +72,8 @@ int main()
         printf("%d ", a[i]);
     }
     printf("\n");
-
+    end = clock();
+    float duration = ((float)(end - start)) / CLOCKS_PER_SEC;
+    printf("The time taken for HeapSort is: %f", duration);
     return 0;
 }
