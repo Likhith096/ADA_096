@@ -68,7 +68,7 @@ int main()
     int n;
     printf("Enter the dimension of chessBoard\n");
     scanf("%d", &n);
-    if(n<=3)
+    if(n==2 || n==3)
     {
         printf("No solution exists\n");
         exit(0);
