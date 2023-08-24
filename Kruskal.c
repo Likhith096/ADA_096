@@ -1,84 +1,79 @@
 #include <stdio.h>
-#include <stdlib.h>
- 
-int i, j, k, a, b, u, v, n, ne = 1;
-int min, mincost = 0, cost[9][9], parent[9];
- 
-int find(int);
-int uni(int, int);
- 
-void main()
+int a[10][10]; // Adjacency Matrix
+int find(int v, int parent[10])//used to find the representative (parent) of a given vertex in a disjoint-set
 {
-  printf("Kruskal's algorithm in C\n");
-  printf("========================\n");
- 
-  printf("Enter the no. of vertices:\n");
-  scanf("%d", &n);
- 
-  printf("\nEnter the cost adjacency matrix:\n");
-  for (i = 1; i <= n; i++)
+  while (parent[v] != v)
   {
-    for (j = 1; j <= n; j++)
-    {
-      scanf("%d", &cost[i][j]);
-      if (cost[i][j] == 0)
-        cost[i][j] = 999;
-    }
+    v = parent[v];
   }
- 
-  printf("The edges of Minimum Cost Spanning Tree are\n");
-  while (ne < n)
+  return v;
+}
+void union1(int i, int j, int parent[10])//connects two sets by updating the parent of one representative to point to the other representative.
+{
+  if (i < j)
+    parent[j] = i;
+  else
+    parent[i] = j;
+}
+void kruskal(int n)
+{
+  int count, k, min, sum, i, j, t[10][10], u, v, parent[10];
+  count = 0; //To keep track of number of edges in MST
+  k = 0;
+  sum = 0; //Total sum will be minimum spanning weight
+  for (i = 0; i < n; i++)
+    parent[i] = i; //Initialize the parents
+  while (count != n - 1)
   {
-    for (i = 1, min = 999; i <= n; i++)
+    min = 999;
+    // Find the edge with the minimum weight (min) in the graph's adjacency matrix.
+    for (i = 0; i < n; i++)
     {
-      for (j = 1; j <= n; j++)
+      for (j = 0; j < n; j++)
       {
-        if (cost[i][j] < min)
+
+        if (a[i][j] < min && a[i][j] != 0) 
         {
-          min = cost[i][j];
-          a = u = i;
-          b = v = j;
+          min = a[i][j];
+          u = i; //u,v -> vertices of minimum edge
+          v = j;
         }
       }
     }
- 
-    u = find(u);
-    v = find(v);
- 
-    if (uni(u, v))
+    i = find(u, parent); //Finding parents of u,v
+    j = find(v, parent);
+    //If the parents of u and v are different, it means adding the edge u-v does not create a cycle. 
+    if (i != j)
     {
-      printf("%d edge (%d,%d) =%d\n", ne++, a, b, min);
-      mincost += min;
+      union1(i, j, parent);
+      t[k][0] = u;
+      t[k][1] = v;
+      k++;
+      count++;
+      sum = sum + a[u][v];
     }
- 
-    cost[a][b] = cost[b][a] = 999;
+    a[u][v] = a[v][u] = 999; //To ensure that this minimum edge will be not chosen again
   }
- 
-  printf("\nMinimum cost = %d\n", mincost);
-  getch();
-}
- 
-int find(int i)
-{
-  while (parent[i])
-    i = parent[i];
-  return i;
-}
- 
-int uni(int i, int j)
-{
-  if (i != j)
+  if (count == n - 1)
   {
-    parent[j] = i;
-    return 1;
+    printf("Spanning tree\n");
+    for (i = 0; i < n - 1; i++)
+    {
+      printf("%d %d\n", t[i][0], t[i][1]);
+    }
+    printf("Cost of spanning tree=%d\n", sum);
   }
- 
-  return 0;
+  else
+    printf("Spanning tree does not exist\n");
 }
-
-// 4 vertices
-//Adj matrix with cost :-
-// 0 1 3 4
-// 1 0 2 999
-// 3 2 0 5
-// 4 999 5 0
+void main()
+{
+  int n, i, j;
+  printf("Enter the number of nodes:\n");
+  scanf("%d", &n);
+  printf("Enter the adjacency matrix:\n");
+  for (i = 0; i < n; i++)
+    for (j = 0; j < n; j++)
+      scanf("%d", &a[i][j]);
+  kruskal(n);
+}
