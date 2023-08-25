@@ -13,7 +13,7 @@ void DFS(int i,int vis[],int n)
         }
     }
 }
-void main()
+int main()
 {
     int n,i,j,top=-1;
     printf("Enter the number of vertices:\n");
@@ -33,6 +33,19 @@ void main()
         vis[i]=0;
     }
     DFS(0,vis,n);
+    int isConnected = 1;
+    for(int i=0;i<n;i++)
+    {
+        if(vis[i]==0){
+            isConnected=0;
+            break;
+        }
+    }
+    if(isConnected)
+        printf("\nThe Graph is Connected\n");
+    else
+        printf("\nThe Graph is not Connected\n");
+    return 0;
 }
 
 /*
