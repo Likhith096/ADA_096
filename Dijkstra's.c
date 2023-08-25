@@ -1,8 +1,8 @@
 #include <stdio.h>
 #define INFINITY 999
 #define MAX 10
-
-void Dijkstra(int Graph[MAX][MAX], int n, int start)
+int Graph[MAX][MAX];
+void Dijkstra( int n, int start)
 {
     int cost[MAX][MAX], distance[MAX], pred[MAX];
     int visited[MAX], count, mindistance, nextnode, i, j;
@@ -86,7 +86,7 @@ int main()
         }
     }
 
-    Dijkstra(Graph, n, 1);
+    Dijkstra(n, 1);
 
     return 0;
 }

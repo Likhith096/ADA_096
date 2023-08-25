@@ -14,17 +14,17 @@ void main()
 
     int arr[n + 1][cap + 1]; // Corrected the size of the 'arr' matrix
 
-    for (i = 0; i <= n; i++)
+    for (i = 0; i <= n; i++) // no. of items -> rows
     {
-        for (j = 0; j <= cap; j++)
+        for (j = 0; j <= cap; j++)// capacity -> cols
         {
             if (i == 0 || j == 0)
                 arr[i][j] = 0;
-            else if (j < w[i]) // Changed 'w[i-1]' to 'w[i]'
+            else if (j < w[i]) // weight is more than capacity -> prev row is taken 
                 arr[i][j] = arr[i - 1][j];
-            else if (j >= w[i]) // Changed 'w[i-1]' to 'w[i]'
+            else if (j >= w[i]) // capacity is more than this weight
             {
-                if (arr[i - 1][j] >= arr[i - 1][j - w[i]] + pft[i]) // Corrected the condition
+                if (arr[i - 1][j] >= arr[i - 1][j - w[i]] + pft[i]) // Prev is more then keep it
                     arr[i][j] = arr[i - 1][j];
                 else
                     arr[i][j] = arr[i - 1][j - w[i]] + pft[i]; // Added 'else' block
@@ -41,6 +41,7 @@ void main()
         }
         printf("\n");
     }
+    //To get the selected items :-
     for(i=n;i>=1;i--)
     {
         if(arr[i][cap]!=arr[i-1][cap])
